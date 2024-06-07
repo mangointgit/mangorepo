@@ -1,0 +1,32 @@
+import unicodedata
+
+def detect_multi_byte_characters(data_stream):
+    """
+    Detect multi-byte characters in the given data stream.
+
+    Args:
+    - data_stream (str): The input string data stream to check for multi-byte characters.
+
+    Returns:
+    - List of tuples containing (character, character_name, byte_length).
+    """
+    multi_byte_chars = []
+
+    for char in data_stream:
+        # Get the Unicode code point of the character
+        code_point = ord(char)
+        
+        # Check if the character is a multi-byte character (non-ASCII)
+        if code_point > 127:
+            char_name = unicodedata.name(char, "UNKNOWN CHARACTER")
+            byte_length = len(char.encode('utf-8'))
+            multi_byte_chars.append((char, char_name, byte_length))
+
+    return multi_byte_chars
+
+# Example usage
+data_stream = "Hello, 世界! 🌍"
+multi_byte_chars = detect_multi_byte_characters(data_stream)
+
+for char, char_name, byte_length in multi_byte_chars:
+    print(f"Character: {char}, Name: {char_name}, Byte Length: {byte_length}")
