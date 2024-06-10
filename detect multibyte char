@@ -24,9 +24,24 @@ def detect_multi_byte_characters(data_stream):
 
     return multi_byte_chars
 
+def write_to_file(filename, multi_byte_chars):
+    """
+    Write the list of multi-byte characters to a file.
+
+    Args:
+    - filename (str): The name of the file to write to.
+    - multi_byte_chars (list): The list of multi-byte characters.
+    """
+    with open(filename, 'w', encoding='utf-8') as file:
+        for char, char_name, byte_length in multi_byte_chars:
+            file.write(f"Character: {char}, Name: {char_name}, Byte Length: {byte_length}\n")
+
 # Example usage
 data_stream = "Hello, 世界! 🌍"
 multi_byte_chars = detect_multi_byte_characters(data_stream)
 
-for char, char_name, byte_length in multi_byte_chars:
-    print(f"Character: {char}, Name: {char_name}, Byte Length: {byte_length}")
+# Write the results to an output file
+output_filename = 'unsupported_multibyte_characters.txt'
+write_to_file(output_filename, multi_byte_chars)
+
+print(f"Unsupported multi-byte characters have been written to {output_filename}")
